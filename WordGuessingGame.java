@@ -18,11 +18,14 @@ public class WordGuessingGame
      */
     public WordGuessingGame()
     {
-        this.hiddenWord = wordG.generateWord();
-        this.guessedWord = hiddenWord.length();
-        this.numberOfTries = 0;
         this.reader=new InputReader();
         this.wordG = new WordGenerator();
+        this.hiddenWord = wordG.generateWord();
+        this.guessedWord= guessedWord;
+        this.numberOfTries = 0;
+        
+    
+        
     }
 
     /**
@@ -40,6 +43,9 @@ public class WordGuessingGame
     public int getNumberOfTries(){
         return numberOfTries;
     }
+    public void setGuessedWord(String guessedWord){
+        this.guessedWord = guessedWord;
+    }
     
     private void showGuessedWord(){
         System.out.println("Tentativa: "+guessedWord);
@@ -47,7 +53,9 @@ public class WordGuessingGame
     
     public void play(){
         showWelcome();
-        while(!guessedWord.equals(hiddenWord)){
+        hiddenWord = wordG.generateWord();
+        initializeGuessedWord();
+            while(!guessedWord.equals(hiddenWord)){
             System.out.println("Introduza uma letra");
             char l=reader.getChar(guessedWord);
             guess(l);  
@@ -74,8 +82,16 @@ public class WordGuessingGame
         System.out.println("Voce acertou a palavra: "+hiddenWord);
     }
     private void initializeGuessedWord(){
-        char[] w =
-        guessedWord.size() = hiddenWord.size();
+        char[] guessedA = new char[hiddenWord.length()];
+        for(int i=0;i<hiddenWord.length();i++){
+            guessedA[i] = '_';
+        }
+        setGuessedWord(new String(guessedA));
+    }
+    public void reset(){
+        numberOfTries = 0;
+        hiddenWord = wordG.generateWord();
+        initializeGuessedWord();
     }
 }
 
