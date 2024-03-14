@@ -11,14 +11,16 @@ public class WordGuessingGame
     private String hiddenWord;
     private String guessedWord;
     private int numberOfTries;
+    private InputReader reader;
     /**
      * Construtor para objetos da classe WordGuessingGame
      */
     public WordGuessingGame()
     {
-        hiddenWord = "abc";
-        guessedWord = "___";
-        numberOfTries = 0;
+        this.hiddenWord = "abc";
+        this.guessedWord = "___";
+        this.numberOfTries = 0;
+        this.reader=new InputReader();
     }
 
     /**
@@ -37,7 +39,37 @@ public class WordGuessingGame
         return numberOfTries;
     }
     
-    public void showGuessedWord(){
+    private void showGuessedWord(){
         System.out.println("Tentativa: "+guessedWord);
     }
+    
+    public void play(){
+        showWelcome();
+        while(!guessedWord.equals(hiddenWord)){
+            System.out.println("Introduza uma letra");
+            char l=reader.getChar(guessedWord);
+            guess(l);  
+        }
+        showResult();
+    }
+    
+    private void showWelcome(){
+        System.out.println("Bem-vindo ao jogo");
+    }
+    private void guess(char letter){
+        char[] letters =hiddenWord.toCharArray();
+        char[] guessed=guessedWord.toCharArray();
+        for(int i =0;i<hiddenWord.length();i++){
+            if(letters[i] == letter){
+                  guessed[i]=letter;
+                  this.guessedWord=String.valueOf(guessed);
+            }
+        }
+        numberOfTries++;
+    }
+    private void showResult(){
+        System.out.println("Número de tentativas: "+numberOfTries);
+        System.out.println("Voce acertou a palavra: "+hiddenWord);
+    }
 }
+
